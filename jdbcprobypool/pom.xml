@@ -24,7 +24,7 @@
         </dependency>
 
 
-        <!--导入 MySQL 依赖-->
+        <!-- MySQL驱动 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -32,7 +32,9 @@
         </dependency>
 
 
-        <!--c3p0 数据池-->
+        
+        
+        <!-- c3p0数据池 -->
         <dependency>
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
@@ -40,14 +42,14 @@
         </dependency>
 
 
-        <!--dbcp 数据池-->
-        <!--dbcp-->
+        <!-- dbcp数据池 -->
+        <!-- dbcp -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
             <version>2.9.0</version>
         </dependency>
-        <!--pool-->
+        <!-- pool -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
@@ -55,7 +57,7 @@
         </dependency>
 
 
-        <!--Druid 数据池-->
+        <!-- Druid数据池 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
@@ -63,14 +65,12 @@
         </dependency>
 
 
-        <!--dbutils工具-->
+        <!-- dbutils工具 -->
         <dependency>
             <groupId>commons-dbutils</groupId>
             <artifactId>commons-dbutils</artifactId>
             <version>1.7</version>
         </dependency>
-
-
 
 
     </dependencies>
