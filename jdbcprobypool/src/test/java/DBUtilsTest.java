@@ -1,5 +1,5 @@
-import com.utils.DPUtils;
-import com.pojo.Book;
+import com.jdbc.utils.DPUtils;
+import com.jdbc.pojo.Book;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.*;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @description: dbutils 测试
+ * @description: Dbutils测试
  */
 public class DBUtilsTest {
     
@@ -20,13 +20,13 @@ public class DBUtilsTest {
      * 测试插入（更新、删除类似）
      */
     @Test
-    public void testInsert() {
+    public void insertTest() {
         Connection connectionByDruid = null;
         try {
             QueryRunner queryRunner = new QueryRunner();
             connectionByDruid = DPUtils.getConnectionByDruid();
-            String sql = "insert into book_info(bookid,bookname,bookautor,bookprice,booknum) values(?,?,?,?,?)";
-            int insertCount = queryRunner.update(connectionByDruid, sql, "555", "《asp》", "zhangsan", "110", "20");
+            String sql = "insert into book(id, name, author, price, num) values(?, ?, ?, ?, ?)";
+            int insertCount = queryRunner.update(connectionByDruid, sql, "555", "《asp》", "zs", "110", "20");
             System.out.println("添加了" + insertCount + "条数据");
         } catch (Exception e) {
             e.printStackTrace();
@@ -37,17 +37,15 @@ public class DBUtilsTest {
     
     
     @Test
-    public void testQueryByBean() {
+    public void queryByBeanTest() {
         Connection connectionByDruid = null;
         try {
             QueryRunner queryRunner = new QueryRunner();
             connectionByDruid = DPUtils.getConnectionByDruid();
-            String sql = "select bookid,bookname,bookautor,bookprice,booknum from book_info where bookautor= ?";
+            String sql = "select id, name, author, price, num from book where author = ?";
             
-            //BeanHandler 是 ResultSetHandler 接口的实现类，用于封装表中的一条数据
-            //BeanListHandler 是 ResultSetHandler 接口的实现类，用于封装表中的多条数据
-            List<Book> books = queryRunner.query(connectionByDruid, sql, new BeanListHandler<>(Book.class), "5");
-            books.forEach(System.out::println);
+            List<Book> bookList = queryRunner.query(connectionByDruid, sql, new BeanListHandler<>(Book.class), "王小波");
+            bookList.forEach(System.out::println);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -57,18 +55,15 @@ public class DBUtilsTest {
     
     
     @Test
-    public void testQueryByMap() {
-        
+    public void queryByMapTest() {
         Connection connectionByDruid = null;
         try {
             QueryRunner queryRunner = new QueryRunner();
             connectionByDruid = DPUtils.getConnectionByDruid();
-            String sql = "select bookid,bookname,bookautor,bookprice,booknum from book_info where bookautor= ?";
+            String sql = "select id, name, author, price, num from book where author = ?";
             
-            //MapHandler 是 ResultSetHandler 接口的实现类，用于封装表中的一条数据
-            //MapListHandler 是 ResultSetHandler 接口的实现类，用于封装表中的多条数据
-            List<Map<String, Object>> maps = queryRunner.query(connectionByDruid, sql, new MapListHandler(), "5");
-            maps.forEach(System.out::println);
+            List<Map<String, Object>> mapList = queryRunner.query(connectionByDruid, sql, new MapListHandler(), "王小波");
+            mapList.forEach(System.out::println);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -78,14 +73,13 @@ public class DBUtilsTest {
     
     
     @Test
-    public void testQueryByScalar() {
+    public void queryByScalarTest() {
         Connection connectionByDruid = null;
         try {
             QueryRunner queryRunner = new QueryRunner();
             connectionByDruid = DPUtils.getConnectionByDruid();
-            String sql = "select count(*) from book_info";
+            String sql = "select count(*) from book";
             
-            //将 ResultSet 中的某一条记录的其中某一列的数据储存成 Object 对象，用于封装表中的一条数据
             long count = (long) queryRunner.query(connectionByDruid, sql, new ScalarHandler<>());
             System.out.println(count);
         } catch (Exception e) {
@@ -97,37 +91,36 @@ public class DBUtilsTest {
     
     
     /**
-     * 自定义 ResultSetHandler 的实现类
+     * 自定义ResultSetHandler的实现类
      */
     @Test
-    public void testQueryByCustom() {
+    public void queryByCustomTest() {
         Connection connectionByDruid = null;
         try {
             QueryRunner queryRunner = new QueryRunner();
             connectionByDruid = DPUtils.getConnectionByDruid();
-            String sql = "select bookid,bookname,bookautor,bookprice,booknum from book_info where bookautor= ?";
+            String sql = "select id, name, author, price, num from book where author = ?";
             
             ResultSetHandler<Book> resultSetHandler = new ResultSetHandler<Book>() {
                 @Override
                 public Book handle(ResultSet rs) throws SQLException {
-                    //System.out.println("handle");
-                    //return null;
+                    // System.out.println("handle");
+                    // return null;
                     
                     if (rs.next()) {
-                        String bookid = rs.getString("bookid");
-                        String bookname = rs.getString("bookname");
-                        String bookautor = rs.getString("bookautor");
-                        double bookprice = rs.getDouble("bookprice");
-                        int booknum = rs.getInt("booknum");
-                        Book book = new Book(bookid, bookname, bookautor, bookprice, booknum);
+                        Integer id = rs.getInt("id");
+                        String name = rs.getString("name");
+                        String author = rs.getString("author");
+                        double price = rs.getDouble("price");
+                        int num = rs.getInt("num");
+                        Book book = new Book(id, name, author, price, num);
                         return book;
                     }
                     return null;
-                    
                 }
             };
             
-            Book book = queryRunner.query(connectionByDruid, sql, resultSetHandler, "5");
+            Book book = queryRunner.query(connectionByDruid, sql, resultSetHandler, "王小波");
             System.out.println(book);
         } catch (Exception e) {
             e.printStackTrace();

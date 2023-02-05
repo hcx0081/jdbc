@@ -34,10 +34,8 @@ public abstract class BaseDao<T> {
         // SQL中占位符的个数与可变形参的长度一致
         
         // ·不主动获取connection连接
-        
-        PreparedStatement preparedStatement = null;
-        
-        preparedStatement = connection.prepareStatement(sql);
+    
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
         for (int i = 0; i < args.length; i++) {
             preparedStatement.setObject(i + 1, args[i]);// 注意参数
         }

@@ -1,4 +1,4 @@
-package com.utils;
+package com.jdbc.utils;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -16,68 +16,72 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * @description: 数据库连接池连接工具
+ * @description: 数据库连接池工具
  */
 public class DPUtils {
     
     /**
-     * 创建 C3P0 数据库连接池
+     * 创建C3P0数据库连接池
      */
-    //数据连接池只需要造一个，防止每次连接每次造
-    //无参数需要自定义配置或直接调用默认的 config
+    // 数据连接池只需要创建一个，防止每次连接每次创建
+    // 无参数需要自定义配置或直接调用默认 config
     private static ComboPooledDataSource cpds = new ComboPooledDataSource();
+    
     /**
-     * 获取 C3P0 数据库连接池连接
+     * 获取C3P0数据库连接池连接
+     *
      * @return
+     *
      * @throws SQLException
      */
     public static Connection getConnectionByC3P0() throws SQLException {
         Connection connection = cpds.getConnection();
         return connection;
     }
-
-
-
-
+    
+    
     /**
-     * 创建 DBCP 数据库连接池
+     * 创建DBCP数据库连接池
      */
-    private static  BasicDataSource basicDataSource =null;
+    private static BasicDataSource basicDataSource = null;
+    
     static {
         try {
-            FileInputStream inputStream=new FileInputStream("src/main/resources/dbcp.properties");
+            FileInputStream inputStream = new FileInputStream("src/main/resources/dbcp.properties");
             Properties properties = new Properties();
             properties.load(inputStream);
-
+            
             basicDataSource = BasicDataSourceFactory.createDataSource(properties);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
     /**
-     * 获取 DBCP 数据库连接池连接
+     * 获取DBCP数据库连接池连接
+     *
      * @return
+     *
      * @throws Exception
      */
     public static Connection getConnectionByDBCP() throws Exception {
         Connection connection = basicDataSource.getConnection();
         return connection;
     }
-
-
-
-
+    
+    
     /**
-     * 创建 Druid 数据库连接池
+     * 创建Druid数据库连接池
      */
-    private static DataSource source=null;
+    private static DataSource source = null;
+    
     static {
         try {
-            //FileInputStream inputStream = new FileInputStream("src/main/resources/druid.properties");
-
-            //使用当前的类获取 classLoader
+            // FileInputStream inputStream = new FileInputStream("src/main/resources/druid.properties");
+            
+            // 使用当前类获取ClassLoader
             InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream("druid.properties");
-
+            
             Properties properties = new Properties();
             properties.load(inputStream);
             source = DruidDataSourceFactory.createDataSource(properties);
@@ -85,21 +89,20 @@ public class DPUtils {
             e.printStackTrace();
         }
     }
+    
     /**
-     * 获取 Druid 数据库连接池连接
+     * 获取Druid数据库连接池连接
+     *
      * @return
+     *
      * @throws Exception
      */
     public static Connection getConnectionByDruid() throws Exception {
         Connection connection = source.getConnection();
         return connection;
     }
-
-
-
-
-
-
+    
+    
     public static void closeResource(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
         try {
             if (resultSet != null) {
@@ -123,34 +126,34 @@ public class DPUtils {
             e.printStackTrace();
         }
     }
-
-
+    
+    
     /**
-     * 使用 DBUtils 工具类关闭资源
+     * 使用DBUtils工具类关闭资源
+     *
      * @param resultSet
      * @param preparedStatement
      * @param connection
      */
     public static void closeResourceByDBUtils(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
-        /*try {
-            DbUtils.close(resultSet);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            DbUtils.close(preparedStatement);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            DbUtils.close(connection);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
-
+        // try {
+        //     DbUtils.close(resultSet);
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        // }
+        // try {
+        //     DbUtils.close(preparedStatement);
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        // }
+        // try {
+        //     DbUtils.close(connection);
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        // }
+        
         DbUtils.closeQuietly(resultSet);
         DbUtils.closeQuietly(preparedStatement);
         DbUtils.closeQuietly(connection);
-
     }
 }

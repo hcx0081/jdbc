@@ -12,7 +12,7 @@ import java.util.List;
 public interface BookDao {
     
     /**
-     * 添加Book对象到数据库
+     * 添加记录到数据库表中
      *
      * @param connection
      * @param book

@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <c3p0-config>
-
     <default-config>
-        <!--提供获取连接的4个基本信息-->
+        <!-- 提供获取连接的4个基本信息 -->
         <property name="driverClass">com.mysql.cj.jdbc.Driver</property>
-        <property name="jdbcUrl">jdbc:mysql://localhost:3306/book</property><!--MySQL 8.0.26 以后的版本不需要加时区设置-->
+        <property name="jdbcUrl">jdbc:mysql://localhost:3306/book</property><!-- MySQL8.0.26以后的版本不需要加时区设置 -->
         <property name="user">root</property>
-        <property name="password">623363564</property>
-
-        <!--进行数据库连接池管理的基本信息-->
-        <property name="acquireIncrement">5</property><!--当数据库连接池中的连接数不够时，c3p0 一次性向数据库服务器申请的连接数-->
-        <property name="initialPoolSize">100</property><!--数据库连接池初始化时的连接数-->
+        <property name="password">200081</property>
+        
+        <!-- 进行数据库连接池管理的基本信息 -->
+        <property name="acquireIncrement">5</property><!-- 当数据库连接池中的连接数不够时，c3p0一次性向数据库服务器申请的连接数 -->
+        <property name="initialPoolSize">100</property><!-- 数据库连接池初始化时的连接数 -->
         <property name="maxIdleTime">30</property>
-        <property name="minPoolSize">10</property><!--c3p0 数据库连接池中维护的最少连接数-->
-        <property name="maxPoolSize">100</property><!--c3p0 数据库连接池中维护的最多连接数-->
-        <property name="maxStatements">200</property><!--c3p0 数据库连接池中维护的最多 Statement 的个数-->
-        <property name="maxStatementsPerConnection">5</property><!--每个连接中可以使用的 Statement 个数-->
+        <property name="minPoolSize">10</property><!-- c3p0数据库连接池维护的最少连接数 -->
+        <property name="maxPoolSize">100</property><!-- c3p0数据库连接池维护的最多连接数 -->
+        <property name="maxStatements">200</property><!-- c3p0数据库连接池维护的最多Statement的个数 -->
+        <property name="maxStatementsPerConnection">5</property><!-- 每一个连接中可以使用的Statement个数 -->
     </default-config>
-
-
-        <!--自定义配置-->
-        <!--<named-config name="intergalactoApp">
-            <property name="acquireIncrement">50</property>
-            <property name="initialPoolSize">100</property>
-            <property name="minPoolSize">50</property>
-            <property name="maxPoolSize">1000</property>
-
-            &lt;!&ndash; intergalactoApp adopts a different approach to configuring statement caching &ndash;&gt;
-            <property name="maxStatements">0</property>
-            <property name="maxStatementsPerConnection">5</property>
-
-            &lt;!&ndash; he's important, but there's only one of him &ndash;&gt;
-            <user-overrides user="master-of-the-universe">
-                <property name="acquireIncrement">1</property>
-                <property name="initialPoolSize">1</property>
-                <property name="minPoolSize">1</property>
-                <property name="maxPoolSize">5</property>
-                <property name="maxStatementsPerConnection">50</property>
-            </user-overrides>
-        </named-config>-->
+    
+    
+    <!-- 自定义配置 -->
+    <!-- <named-config name="intergalactoApp"> -->
+    <!--     <property name="acquireIncrement">50</property> -->
+    <!--     <property name="initialPoolSize">100</property> -->
+    <!--     <property name="minPoolSize">50</property> -->
+    <!--     <property name="maxPoolSize">1000</property> -->
+    <!--      -->
+    <!--     &lt;!&ndash; intergalactoApp adopts a different approach to configuring statement caching &ndash;&gt; -->
+    <!--     <property name="maxStatements">0</property> -->
+    <!--     <property name="maxStatementsPerConnection">5</property> -->
+    <!--      -->
+    <!--     &lt;!&ndash; he's important, but there's only one of him &ndash;&gt; -->
+    <!--     <user-overrides user="master-of-the-universe"> -->
+    <!--         <property name="acquireIncrement">1</property> -->
+    <!--         <property name="initialPoolSize">1</property> -->
+    <!--         <property name="minPoolSize">1</property> -->
+    <!--         <property name="maxPoolSize">5</property> -->
+    <!--         <property name="maxStatementsPerConnection">50</property> -->
+    <!--     </user-overrides> -->
+    <!-- </named-config> -->
 
 </c3p0-config>
