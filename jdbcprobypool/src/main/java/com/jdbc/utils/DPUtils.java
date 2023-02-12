@@ -24,7 +24,7 @@ public class DPUtils {
      * 创建C3P0数据库连接池
      */
     // 数据连接池只需要创建一个，防止每次连接每次创建
-    // 无参数需要自定义配置或直接调用默认 config
+    // 无参数需要自定义配置或直接调用默认config
     private static ComboPooledDataSource cpds = new ComboPooledDataSource();
     
     /**
@@ -34,8 +34,13 @@ public class DPUtils {
      *
      * @throws SQLException
      */
-    public static Connection getConnectionByC3P0() throws SQLException {
-        Connection connection = cpds.getConnection();
+    public static Connection getConnectionByC3P0() {
+        Connection connection;
+        try {
+            connection = cpds.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return connection;
     }
     
@@ -64,8 +69,13 @@ public class DPUtils {
      *
      * @throws Exception
      */
-    public static Connection getConnectionByDBCP() throws Exception {
-        Connection connection = basicDataSource.getConnection();
+    public static Connection getConnectionByDBCP() {
+        Connection connection;
+        try {
+            connection = basicDataSource.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return connection;
     }
     
@@ -97,8 +107,13 @@ public class DPUtils {
      *
      * @throws Exception
      */
-    public static Connection getConnectionByDruid() throws Exception {
-        Connection connection = source.getConnection();
+    public static Connection getConnectionByDruid() {
+        Connection connection;
+        try {
+            connection = source.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return connection;
     }
     
